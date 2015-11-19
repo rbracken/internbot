@@ -50,7 +50,7 @@ class Load():
     def echo(self, ircmsg):
         if ircmsg.lower().find(":" + self.botnick + " say") != -1: 
             repeat = ircmsg.split("say")
-            self.sendmsg(self.channel, repeat[1])
+            self.sendmsg(repeat[1])
             return True
             
             
