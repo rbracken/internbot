@@ -13,6 +13,6 @@ memorysize = 500
 
 
 # Plugins list; default is empty list. Plugins are loaded in order of their listing.
-plugins = ["roku", "loadmod", "lmgtfy", "intern"]
+plugins = ["ignore","roku", "loadmod", "lmgtfy", "intern"]
 
 
