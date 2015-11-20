@@ -20,14 +20,15 @@ class Load():
             if user in blacklist:
                 self.sendmsg("I don't take orders from you, " + user + "!")
                 return True
-            elif "unignore" in ircmsg.lower():
+            elif "unignore" in ircmsg.lower() and not "loadmod" in ircmsg.lower() :
                 ignuser = ircmsg.lower().split("unignore")[1].strip()
                 if ignuser in blacklist:
                     self.sendmsg("Unignoring " + ignuser + " from now on")
+                    del blacklist[blacklist.index(ignuser)]
                 else:
                     self.sendmsg("User not ignored")   
                 return True
-            elif "ignore" in ircmsg.lower():
+            elif "ignore" in ircmsg.lower() and not "loadmod" in ircmsg.lower():
                 ignuser = ircmsg.lower().split("ignore")[1].strip()
                 if ignuser not in blacklist:
                     blacklist.append(ignuser)
