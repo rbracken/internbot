@@ -17,7 +17,8 @@ def pickone(alist):
 
 def ping(ircmsg, ircsock): # This is our first function! It will respond to server Pings.
     if ircmsg.find("PING :") != -1: # if the server pings us then we've got to respond!
-        ircsock.send("PONG :pingis\n")
+        pingmsg = ircmsg.split(':')[1]
+        ircsock.send("PONG :" + pingmsg + "\n")
         return True 
 
 def listen(ircsock):

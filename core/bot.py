@@ -14,6 +14,10 @@ class Bot(Server):
     def __init__(self, server, port, channels, botnick, memorysize, plugins):
         # Init server class
         super(Bot, self).__init__(connect(server,port,botnick), botnick)
+        while True:	
+            ircmsg = listen(self.ircsock)
+            if ping(ircmsg, self.ircsock):
+               break
         # Import plugins
         self.modules = []
         for plugin in plugins:

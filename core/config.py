@@ -1,7 +1,7 @@
 """ This is the interbot configuration file for the bot"""
 
 # Address of the server
-server = "example.com"
+server = "brackyard.net"
 # Server port
 port = 6667
 # Your bot's IRC nick
@@ -13,6 +13,6 @@ memorysize = 500
 
 
 # Plugins list; default is empty list. Plugins are loaded in order of their listing.
-plugins = ["ignore","roku", "loadmod", "lmgtfy", "intern"]
+plugins = ["ignore", "loadmod", "lmgtfy", "intern"]
 
 
