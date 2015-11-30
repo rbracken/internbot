@@ -98,29 +98,29 @@ seen in the roku plugin, in `plugins/roku/`.
 
 Mandatory components:
 In your plugin's folder:
-- __init__.py : this will tell internbot that this is a plugin package. In it, you
+- `__init__.py` : this will tell internbot that this is a plugin package. In it, you
     import your plugin, like so: `from yourpluginname import *`
-- yourmodulename.py : the actual code for your plugin/module. This file should contain
+- `yourmodulename.py` : the actual code for your plugin/module. This file should contain
     a set of mandatory classes, methods and function definitions (outlined below) as
     well as any additional code to make the plugin function.
-- config.py (optional) : your plugin's config file
+- `config.py` (optional) : your plugin's config file
 
 In yourmodulename.py:
 - class Load() : this class is the instance of your plugin. It must contain the following:
-    - def __init__(self, channel): All the setup code for the plugin. `channel` is a 
+    - `def __init__(self, channel)` : All the setup code for the plugin. `channel` is a 
         a reference to the parent Channel() object which is *always* passed in.
-    - def __del__(self): when the module is unloaded or internbot quits, this code will
+    - `def __del__(self)` : when the module is unloaded or internbot quits, this code will
         be executed for cleanup. Complex modules with background tasks or plugins
         which modify channel methods will want to add cleanup code here.
-    - def run(self, ircmsg): this method is called every time a new message is inter-
+    - `def run(self, ircmsg)`: this method is called every time a new message is inter-
         cepted by internbot. `ircmsg` is the raw textline that was recieved from the 
         IRC server. If your module does not require interaction at runtime, simply
         define this with `pass`.
- - def stop(): this is called when unloading the module or when internbot quits. If 
+ - `def stop(`): this is called when unloading the module or when internbot quits. If 
     there are background tasks running, this method can be used to stop them. If no
     cleanup is needed on halt or unload, then simply define this with `pass`
    
- In addition, the Load() class must include the attribute `self.name`, which should be
+ In addition, the `Load()` class must include the attribute `self.name`, which should be
  identical to the the file name of yourmodulename.py
 
     
