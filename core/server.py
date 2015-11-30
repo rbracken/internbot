@@ -11,21 +11,24 @@ class Server(object):
         self.ircsock = ircsock
     
 
-    def sendmsg(self, msg): # This is the send message function, it simply sends messages to the channel.
+    def sendmsg(self, msg):
+        ''' Sends messages to the channel '''
         self.ircsock.send("PRIVMSG "+ self.channel +" :"+ msg +"\n") 
         if len(self.memory) >= self.memorysize:
             self.memory.pop(0)
         self.memory.append(self.botnick +": " +msg)
 
 
-    def joinchan(self, chan): # This function is used to join channels.
+    def joinchan(self, chan):
         self.ircsock.send("JOIN "+ chan +"\n")
 
 
     def listen(self):
-        ircmsg = self.ircsock.recv(2048) # receive data from the server
-        ircmsg = ircmsg.strip('\n\r') # removing any unnecessary linebreaks.
-        return ircmsg
+        ''' Grab messages from the TCP socket to the server '''
+        ircmsg = self.ircsock.recv(2048)
+        ircmsgs = ircmsg.splitlines() 
+        print(ircmsg) # Print incoming message (unformatted)
+        return ircmsgs
 
 
     def leavechan(self):

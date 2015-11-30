@@ -21,10 +21,4 @@ def ping(ircmsg, ircsock): # This is our first function! It will respond to serv
         ircsock.send("PONG :" + pingmsg + "\n")
         return True 
 
-def listen(ircsock):
-    ircmsg = ircsock.recv(2048) # receive data from the server
-    ircmsgs = ircmsg.splitlines() # removing any unnecessary linebreaks.
-    print(ircmsg) # Here we print what's coming from the server
-    return ircmsgs
-
 
