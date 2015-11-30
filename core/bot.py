@@ -23,11 +23,12 @@ class Bot(Server):
             self.modules.append(module) 
                      
         # Spawn thread to listen on port
-        t_listen = threading.Thread(target=self.listener())
+        self.channels = []
+        t_listen = threading.Thread(target=self.listener)
+        t_listen.start()
         time.sleep(3) 
         
         # Create channel instances
-        self.channels = []
         for channel in channels:
             self.channels.append(Channel(self, self.ircsock, channel, botnick, memorysize, self.modules))
             time.sleep(0.5)
@@ -40,7 +41,7 @@ class Bot(Server):
         #Polls to get traffic from socket 
         while 1: 
             try:
-                ircmsgs = listen(self.ircsock)
+                ircmsgs = self.listen()
                 for ircmsg in ircmsgs:
                     if ping(ircmsg, self.ircsock):
                         break
