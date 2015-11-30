@@ -3,6 +3,7 @@ import time
 import sys, time
 import importlib
 import traceback
+import threading
 
 #Base modules and configurations
 from utils import *
@@ -14,28 +15,37 @@ class Bot(Server):
     def __init__(self, server, port, channels, botnick, memorysize, plugins):
         # Init server class
         super(Bot, self).__init__(connect(server,port,botnick), botnick)
-        while True:	
-            ircmsg = listen(self.ircsock)
-            if ping(ircmsg, self.ircsock):
-               break
+        
         # Import plugins
         self.modules = []
         for plugin in plugins:
             module = importlib.import_module("plugins.%s" % plugin)
-            self.modules.append(module)
+            self.modules.append(module) 
+                     
+        # Spawn thread to listen on port
+        t_listen = threading.Thread(target=self.listener())
+        time.sleep(3) 
+        
+        # Create channel instances
         self.channels = []
         for channel in channels:
-            time.sleep(1)
             self.channels.append(Channel(self, self.ircsock, channel, botnick, memorysize, self.modules))
-        self.listener() 
+            time.sleep(0.5)
+        
+        # Wait on thread exit 
+        t_listen.join()
+        
      
     def listener(self):
-        while 1: # Be careful with these! it might send you to an infinite loop
+        #Polls to get traffic from socket 
+        while 1: 
             try:
-                ircmsg = listen(self.ircsock)
-                ping(ircmsg, self.ircsock)
-                for channel in self.channels:
-                    channel.read(ircmsg)
+                ircmsgs = listen(self.ircsock)
+                for ircmsg in ircmsgs:
+                    if ping(ircmsg, self.ircsock):
+                        break
+                    for channel in self.channels:
+                        channel.read(ircmsg)
             except:
                 print "\nError caught:", sys.exc_info()[0]
                 print "\nStarting shutdown\n"
