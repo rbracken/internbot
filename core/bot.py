@@ -9,6 +9,7 @@ import threading
 from utils import *
 from server import *
 from channel import *
+from privmsg import *
 
 
 class Bot(Server):
@@ -28,6 +29,8 @@ class Bot(Server):
         t_listen.start()
         time.sleep(3) 
         
+        # Create PM 'channel'
+        self.channels.append(Privmsg(self, self.ircsock, botnick, memorysize, self.modules))
         # Create channel instances
         for channel in channels:
             self.channels.append(Channel(self, self.ircsock, channel, botnick, memorysize, self.modules))

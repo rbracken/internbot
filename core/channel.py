@@ -37,20 +37,20 @@ class Channel(Server):
             if line < 0 or line > len(self.memory):
                 line = 0
             while line < len(self.memory):
-                self.ircsock.send("PRIVMSG "+ self.channel +" :"+ self.memory[line]+"\n")
+                self.sendmsg(self.memory[line]+"\n", False)
                 line += 1
         elif "first" in criteria.lower():
             line = int(criteria.lower().split("first ")[1])
             temp = 0
             while temp < len(self.memory) and temp < line:
-                self.ircsock.send("PRIVMSG "+ self.channel +" :"+ self.memory[line]+"\n")
+                self.sendmsg(self.memory[line]+"\n", False)
                 temp += 1
         elif "status" in criteria.lower() or "free" in criteria.lower():
             size = len(self.memory)
-            self.ircsock.send("PRIVMSG "+ self.channel +" :"+"Currently memorized " + str(size) + " lines of this conversation." +"\n")
-            self.ircsock.send("PRIVMSG "+ self.channel +" :"+ str(self.memorysize-size) + " additional slots remaining in buffer." +"\n") 
+            self.sendmsg("Currently memorized " + str(size) + " lines of this conversation." +"\n", False)
+            self.sendmsg(str(self.memorysize-size) + " additional slots remaining in buffer." +"\n", False) 
         else:
-            self.ircsock.send("PRIVMSG "+ self.channel +" :"+"Say '" + self.botnick + "' replay <first/last/status> <numlines>"+"\n") 
+            self.sendmsg("Say '" + self.botnick + "' replay <first/last/status> <numlines>"+"\n", False) 
     
     
     def read(self, ircmsg):
@@ -80,5 +80,5 @@ class Channel(Server):
                 for plugin in self.plugins:
                     if plugin.run(ircmsg) == True:
                         break
-
+        
 

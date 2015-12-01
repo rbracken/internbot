@@ -11,12 +11,13 @@ class Server(object):
         self.ircsock = ircsock
     
 
-    def sendmsg(self, msg):
-        ''' Sends messages to the channel '''
-        self.ircsock.send("PRIVMSG "+ self.channel +" :"+ msg +"\n") 
-        if len(self.memory) >= self.memorysize:
-            self.memory.pop(0)
-        self.memory.append(self.botnick +": " +msg)
+    def sendmsg(self, msg, remember=True):
+        ''' Sends messages back to the user'''
+        self.ircsock.send("PRIVMSG "+ self.channel +" :"+ msg +"\n")
+        if remember == True: 
+            if len(self.memory) >= self.memorysize:
+                self.memory.pop(0)
+            self.memory.append(self.botnick +": " +msg)
 
 
     def joinchan(self, chan):
