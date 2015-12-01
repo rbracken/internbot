@@ -16,6 +16,7 @@ class Bot(Server):
     def __init__(self, server, port, channels, botnick, memorysize, plugins):
         # Init server class
         super(Bot, self).__init__(connect(server,port,botnick), botnick)
+        self.halt = False
         
         # Import plugins
         self.modules = []
@@ -37,12 +38,16 @@ class Bot(Server):
             time.sleep(0.5)
         
         # Wait on thread exit 
-        t_listen.join()
-        
+        try:
+            t_listen.join()
+        except:
+            # Something's gone wrong; exit now
+            self.halt = True
+         
      
     def listener(self):
         #Polls to get traffic from socket 
-        while 1: 
+        while not self.halt: 
             try:
                 ircmsgs = self.listen()
                 for ircmsg in ircmsgs:
