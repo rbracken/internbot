@@ -23,31 +23,30 @@ class Privmsg(Channel):
     
     def read(self, ircmsg):
             # Reset the sender so messages don't randomly get sent back
-            self.sender == None
-            # Check if the message 
-            if ircmsg.lower().find(self.channel) != -1 and ircmsg.lower().find("#" + self.channel) == -1:
+            self.sender = None
+            # Check if the message
+            badval = "#" + self.channel + " :"
+            if ircmsg.lower().find(self.channel) != -1 and badval not in ircmsg.lower():
                 self.elephant(ircmsg)
                 self.sender = ircmsg.split('!')[0].split(':')[1]
-            else:
-                return
                 
-            if ircmsg.lower().find(self.channel) != -1 and ircmsg.lower().find(self.botnick) != -1 and ircmsg.find("replay") != -1:
-                self.replay(ircmsg.lower().split('replay')[1])
-            
-            elif ircmsg.lower().find(self.botnick) != -1 and ircmsg.find("join") != -1:
-                newchan = ircmsg.split("join")[1]
-                newchan = newchan.strip()
-                channels = []
-                for channel in self.owner.channels:
-                    channels.append(channel.channel)
-                if newchan not in channels:
-                    self.owner.channels.append(Channel(self.owner, self.ircsock, newchan, 
-                        self.botnick, self.memorysize, self.modules))             
-            
-            else:
-                for plugin in self.plugins:
-                    if plugin.run(ircmsg) == True:
-                        break
+                if ircmsg.lower().find(self.channel) != -1 and ircmsg.lower().find(self.botnick) != -1 and ircmsg.find("replay") != -1:
+                    self.replay(ircmsg.lower().split('replay')[1])
+                
+                elif ircmsg.lower().find(self.botnick) != -1 and ircmsg.find("join") != -1:
+                    newchan = ircmsg.split("join")[1]
+                    newchan = newchan.strip()
+                    channels = []
+                    for channel in self.owner.channels:
+                        channels.append(channel.channel)
+                    if newchan not in channels:
+                        self.owner.channels.append(Channel(self.owner, self.ircsock, newchan, 
+                            self.botnick, self.memorysize, self.modules))             
+                
+                else:
+                    for plugin in self.plugins:
+                        if plugin.run(ircmsg) == True:
+                            break               
         
                
     def sendmsg(self, msg, remember=True):
