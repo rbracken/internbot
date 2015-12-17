@@ -67,7 +67,16 @@ bot's nickname.
 # Install and Configuration
 Simply download / clone into your directory of choice, and run the bot from its root 
 directory with `python internbot.py`. Tested with python2.7 - there might be
-issues with `super()` when running with python3 - use python2.7 for best results.
+issues with `super()` when running with python3 - use python2.7 for best results. 
+
+Installing as a daemon: Copy the install files to the install dir 
+(default: /opt/internbot/). The pid file is stored in /var/internbot/ by default - make
+sure this is owned by the interbot user. Make sure to add a user as which internbot deamon
+will run, for security (default: internbot). All these defaults can be edited in the 
+init.d/interbotd script. Install the internbotd startup script to either 
+/etc/init.d/internbotd or /etc/rc.d/internbotd to enable start at boot. 
+
+Do *not* run internbot as root.
 
 The config file is located at `core/config.py`, with the following options:
 

@@ -60,7 +60,8 @@ class Bot(Server):
                 
             except:
                 break
-
+                
+        # Outside of loop, exit:
         print "\nError caught:", sys.exc_info()[0]
         print "\nStarting shutdown\n"
         exc_type, exc_value, exc_traceback = sys.exc_info()

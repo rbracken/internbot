@@ -26,7 +26,7 @@ class Privmsg(Channel):
             self.sender = None
             # Check if the message
             badval = "#" + self.channel + " :"
-            if ircmsg.lower().find(self.channel) != -1 and badval not in ircmsg.lower():
+            if ircmsg.lower().find(self.channel + " :") != -1 and badval not in ircmsg.lower():
                 self.elephant(ircmsg)
                 self.sender = ircmsg.split('!')[0].split(':')[1]
                 

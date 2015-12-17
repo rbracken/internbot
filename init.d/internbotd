@@ -1,0 +1,44 @@
+#!/bin/sh
+
+#description "Robot Intern"
+#author "Ryan Brackkenbury ryan.brackenbury@gmail.com"
+
+# This is just a stub for starting the service. Definitely are better solutions,
+# but this is simple and should work on all UNIX-like systems
+
+PIDFILE="/var/internbot/internbot.pid"  # Path to where pid should be stored. 
+USER="internbot"                        # Do not run as root
+BINPATH="/opt/internbot/internbot.py"   # Path to install dir
+PYBIN="python"                        # Path to or name of your python executable
+
+
+if [ `whoami` != "root" ]; then
+    echo "Script must be run as root. Usage: $0 {start|stop}"
+    exit 1
+fi
+
+case "$1" in
+  start)
+    if [ -e $PIDFILE ]; then
+      echo "Internbot already running!"
+    else
+      echo "Starting internbot"
+      nohup su $USER -c "exec $PYBIN $BINPATH" &
+      echo -n $! > $PIDFILE
+    fi
+    ;;
+  stop)
+    echo "Stopping internbot"
+    if [ -e $PIDFILE ]; then
+      kill -15 `cat $PIDFILE`
+      rm -f $PIDFILE
+    fi 
+    ;;
+  *)
+    echo "Usage: $0 {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
+
