@@ -33,14 +33,20 @@ class Channel(Server):
 
     def replay(self, criteria):
         if "last" in criteria.lower():
-            line = len(self.memory) - int(criteria.lower().split("last ")[1])
+            try:
+                line = len(self.memory) - int(criteria.lower().split("last ")[1])
+            except:
+                line = len(self.memory) - 5
             if line < 0 or line > len(self.memory):
                 line = 0
             while line < len(self.memory):
                 self.sendmsg(self.memory[line]+"\n", False)
                 line += 1
         elif "first" in criteria.lower():
-            line = int(criteria.lower().split("first ")[1])
+            try:
+                line = int(criteria.lower().split("first ")[1])
+            except:
+                line = 5
             temp = 0
             while temp < len(self.memory) and temp < line:
                 self.sendmsg(self.memory[line]+"\n", False)
