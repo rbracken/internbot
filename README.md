@@ -45,7 +45,7 @@ As its name implies, it comes bundled with plugins to mock-up some intern-like b
     - `<botnick> show roku` : Print the current message being displayed on ROKU
 - pick : This module helps you decide things! Edit the config file to add your own selections,
     some choices (that my coworkers are fond of) for lunch are included. Commands:
-    - `<botnick> pick <topic>` : Randomly pick a choice out of the <topic> list defined in config
+    - `<botnick> pick <topic>` : Randomly pick a choice out of the `<topic>` list defined in config
 
 
 # Built-in commands:
