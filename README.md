@@ -41,8 +41,11 @@ As its name implies, it comes bundled with plugins to mock-up some intern-like b
 - roku : Specialty module, which connects out to ROKU internet radio boxes to display
     marquee text on their displays. Text is displayed until changed or this module is un-
     loaded. Tested and works with ROKU models M1000 and M1001. Commands:
-    `<botnick> update roku <message>` : Display a rotating marquee message on ROKU
-    `<botnick> show roku` : Print the current message being displayed on ROKU
+    - `<botnick> update roku <message>` : Display a rotating marquee message on ROKU
+    - `<botnick> show roku` : Print the current message being displayed on ROKU
+- pick : This module helps you decide things! Edit the config file to add your own selections,
+    some choices (that my coworkers are fond of) for lunch are included. Commands:
+    - `<botnick> pick <topic>` : Randomly pick a choice out of the `<topic>` list defined in config
 
 
 # Built-in commands:
@@ -50,6 +53,8 @@ Some commands are important enough they deserved to be built-in to internbot. Th
 
 - `<botnick> join <chan>` : Join a new channel
 - `<botnick> leave` : Leave the current channel
+- `<botnick> replay [first|last] <lines>` : Print the least/most recent logged chat lines. 
+    If <lines> is not set, defaults to printing 5.
 
 
 # Issuing commands
