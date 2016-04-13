@@ -23,8 +23,6 @@ class Load():
 
         if ircmsg.lower().find(self.channel) != -1 and self.hello(ircmsg):
             return True
-        elif ircmsg.lower().find(self.channel) != -1 and self.predict(ircmsg):
-            return True
         elif ircmsg.lower().find(self.channel) != -1 and self.get_coffee(ircmsg):
             return True
         elif ircmsg.lower().find(self.channel) != -1 and ircmsg.lower().find(self.botnick) and ircmsg.lower().find("coffee") != -1:
@@ -33,7 +31,7 @@ class Load():
         elif ircmsg.lower().find(self.channel) != -1 and self.echo(ircmsg):
             return True
         elif ircmsg.lower().find(self.channel) != -1 and ircmsg.lower().find(self.botnick) != -1 and ircmsg.find("PRIVMSG") != -1:
-            self.sendmsg(pickone(generics))
+            self.respond(ircmsg)
             return True
 
 
@@ -75,8 +73,22 @@ class Load():
                 kov = markov.Markov(file_)
                 self.sendmsg(kov.generate_markov_text())
             except:
-                self.sendmsg("Uh-huh")
+                self.sendmsg(pickone(generics))
             return True
+
+    def respond(self, ircmsg):
+        """ Generates text based on markov chains """
+        try:
+            text = ircmsg.lower().split(self.channel + " :")[0]
+            file_ = open(logfile)
+            kov = markov.Markov(file_)
+            try:
+                self.sendmsg(kov.generate_markov_response(seed_word=text.split()[-2], next_word=text.split()[-1]))
+            except:
+                self.sendmsg(kov.generate_markov_text())
+        except:
+            self.sendmsg("Uh-huh")
+        return True
 
     def stop(self):
         pass
