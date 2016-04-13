@@ -1,9 +1,10 @@
 from config import *
 import time
 from core.utils import *
+import markov
 
 class Load():
-    
+
     def __init__(self, chan):
         self.channel = chan.channel
         self.botnick = chan.botnick
@@ -13,24 +14,29 @@ class Load():
         self.name = "intern"
         self.sendmsg("Caution: module 'intern' should be last loaded module." 
             + " Please `unloadmod intern` and `loadmod intern` if this is not the case")
-     
-     
+
+
     def run(self, ircmsg):
+
+        if logchat == True:
+            self.log(ircmsg)
 
         if ircmsg.lower().find(self.channel) != -1 and self.hello(ircmsg):
             return True
+        elif ircmsg.lower().find(self.channel) != -1 and self.predict(ircmsg):
+            return True
         elif ircmsg.lower().find(self.channel) != -1 and self.get_coffee(ircmsg):
-            return True         
+            return True
         elif ircmsg.lower().find(self.channel) != -1 and ircmsg.lower().find(self.botnick) and ircmsg.lower().find("coffee") != -1:
-            self.sendmsg(pickone(coffees)) 
-            return True  
+            self.sendmsg(pickone(coffees))
+            return True
         elif ircmsg.lower().find(self.channel) != -1 and self.echo(ircmsg):
             return True
         elif ircmsg.lower().find(self.channel) != -1 and ircmsg.lower().find(self.botnick) != -1 and ircmsg.find("PRIVMSG") != -1:
             self.sendmsg(pickone(generics))
             return True
-     
-            
+
+
     def hello(self, ircmsg): # This function responds to a user that inputs "Hello Mybot"
         for entry in hellos:
                 if ircmsg.lower().find(entry.lower() + " "+ self.botnick) != -1: 
@@ -46,17 +52,28 @@ class Load():
             self.joinchan(self.channel)
             self.sendmsg( pickone(return_coffees))
             return True
-    
+
     def echo(self, ircmsg):
         if ircmsg.lower().find(":" + self.botnick + " say") != -1: 
             repeat = ircmsg.split("say")
             self.sendmsg(repeat[1])
             return True
-            
-            
+
+    def log(self, ircmsg):
+        with open(logfile, 'a') as f:
+            f.write(ircmsg)
+
+    def predict(self, ircmsg):
+        """ Generates text based on markov chains """
+        if ircmsg.lower().find(":" + self.botnick + " predict") != -1: 
+            file_ = open(logfile)
+            kov = markov.Markov(file_)
+            kov.generate_markov_text()
+            return True
+
     def stop(self):
         pass
-        
+
 
 def stop():
     pass
