@@ -60,15 +60,22 @@ class Load():
             return True
 
     def log(self, ircmsg):
-        with open(logfile, 'a') as f:
-            f.write(ircmsg)
+        if ircmsg.lower().find(self.channel) != -1 and ircmsg.find("PRIVMSG") != -1:
+            try:
+                with open(logfile, 'a') as f:
+                    f.write(ircmsg.split(self.channel + " :")[1] + " ")
+            except:
+                print "Couldn't log entry to file" 
 
     def predict(self, ircmsg):
         """ Generates text based on markov chains """
         if ircmsg.lower().find(":" + self.botnick + " predict") != -1: 
-            file_ = open(logfile)
-            kov = markov.Markov(file_)
-            kov.generate_markov_text()
+            try:
+                file_ = open(logfile)
+                kov = markov.Markov(file_)
+                self.sendmsg(kov.generate_markov_text())
+            except:
+                self.sendmsg("Uh-huh")
             return True
 
     def stop(self):
