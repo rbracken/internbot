@@ -65,17 +65,6 @@ class Load():
             except:
                 print "Couldn't log entry to file" 
 
-    def predict(self, ircmsg):
-        """ Generates text based on markov chains """
-        if ircmsg.lower().find(":" + self.botnick + " predict") != -1: 
-            try:
-                file_ = open(logfile)
-                kov = markov.Markov(file_)
-                self.sendmsg(kov.generate_markov_text())
-            except:
-                self.sendmsg(pickone(generics))
-            return True
-
     def respond(self, ircmsg):
         """ Generates text based on markov chains """
         try:
@@ -87,7 +76,7 @@ class Load():
             except:
                 self.sendmsg(kov.generate_markov_text())
         except:
-            self.sendmsg("Uh-huh")
+            self.sendmsg(pickone(generics))
         return True
 
     def stop(self):
