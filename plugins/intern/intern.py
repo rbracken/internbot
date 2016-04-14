@@ -68,13 +68,10 @@ class Load():
     def respond(self, ircmsg):
         """ Generates text based on markov chains """
         try:
-            text = ircmsg.lower().split(self.channel + " :")[0]
+            text = ircmsg.lower().split(self.channel + " :")[1]
             file_ = open(logfile)
             kov = markov.Markov(file_)
-            try:
-                self.sendmsg(kov.generate_markov_response(seed_word=text.split()[-2], next_word=text.split()[-1]))
-            except:
-                self.sendmsg(kov.generate_markov_text())
+            self.sendmsg(kov.generate_markov_response(seed_word=text.split()[-2], next_word=text.split()[-1]))
         except:
             self.sendmsg(pickone(generics))
         return True
