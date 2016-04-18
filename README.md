@@ -38,7 +38,7 @@ pattern of `<botnick> <command> <args>`. Of course, some modules can circumvent 
 as the `intern` module does, by simply looking for keywords in *any* text regardless of
 whether or not the botnick is mentioned.
 
-If you are joined to the <botnick> channel, you do not need to preface commands with the
+If you are joined to the `<botnick>` channel, you do not need to preface commands with the
 bot's nickname. It will read commands directly as if all messages were prefaced with the
 bot's nickname.
 
