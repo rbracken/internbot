@@ -19,7 +19,9 @@ class Load():
     def run(self, ircmsg):
 
         if logchat == True:
-            self.log(ircmsg)
+            # Don't log a message if it is a command for internbot
+            if ircmsg.lower().find(self.botnick) == -1:
+                self.log(ircmsg)
 
         if ircmsg.lower().find(self.channel) != -1 and self.hello(ircmsg):
             return True
