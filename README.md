@@ -23,9 +23,9 @@ solutions...
 
 # Demo
 Some sample internbots live at my website, and can be reached by pointing your IRC client of
-choice to `irc.brack.xyz`, and joining `#bot`, or by visiting [my demo page.](https://www.brack.xyz/irc)
+choice to `irc.brack.xyz`, and joining `#bot`, or by visiting [my demo page.](http://www.brack.xyz/irc)
 
-![Shakespearebot Demo](https://www.brack.xyz/shakespeare.gif)
+![Shakespearebot Demo](http://www.brack.xyz/shakespeare.gif)
 
 Currently loaded modules include intern, lmgtfy, broadcast, and pick. Try them out!
 *Fair warning: drakebot can use some choice language when he gets excited!*
